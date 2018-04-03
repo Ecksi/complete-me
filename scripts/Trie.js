@@ -1,15 +1,26 @@
 const Node = require('../scripts/Node');
 
-class LinkedList {
+class Trie {
   constructor() {
-    // needs head, children, wordcount
-    this.length = 0;
-    this.head = null;
+    this.root = new Node('')
+    this.count = 0;
   }
 
-  insert(data) {
-    //words must be converted to a casetype for uniformity
+  insert(word) {
+    let sanitizeWord = word.toLowerCase();
+    let currentNode = this.root;
+
+    this.count++;
+
+    if (!node.child.data) {
+      currentNode.child = new Node(sanitizeWord[0]);
+    }
+
+    if (node.child.data === santizeWord[0]) {
+      currentNode = currentNode.child
+      insert(word[i + 1])
+    }
   }
 }
 
-module.exports = LinkedList
+module.exports = Trie;
