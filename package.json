@@ -1,0 +1,40 @@
+{
+  "name": "complete-me",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "build": "./node_modules/webpack/bin/webpack.js",
+    "test": "mocha --compilers js:babel-core/register tests",
+    "eslint": "./node_modules/eslint/bin/eslint.js ./lib/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ecksi/complete-me.git"
+  },
+  "keywords": [],
+  "author": "Jim Dechant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ecksi/complete-me/issues"
+  },
+  "homepage": "https://github.com/Ecksi/complete-me#readme",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-es2015": "^6.22.0",
+    "chai": "^3.5.0",
+    "css-loader": "^0.26.0",
+    "eslint": "^4.9.0",
+    "locus": "^2.0.1",
+    "mocha": "^3.1.2",
+    "mocha-loader": "^1.0.0",
+    "node-libs-browser": "^1.0.0",
+    "style-loader": "^0.13.1",
+    "http-server": "^0.11.1",
+    "webpack": "^3.10.0",
+    "webpack-cli": "^2.0.11"
+  }
+}
