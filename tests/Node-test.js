@@ -16,11 +16,11 @@ describe('Node', () => {
     expect(node.data).to.equal(null);
   });
 
-  it('should have isWord start out false by default', () => {
-    expect(node.isWord).to.equal(false);
+  it('should have end start out false by default', () => {
+    expect(node.end).to.equal(false);
   });
 
-  it('should have child start as an empty object', () => {
-    expect(node.child).to.deep.equal({});
+  it('should have child start as an empty object by default', () => {
+    expect(node.children).to.deep.equal({});
   });
 })

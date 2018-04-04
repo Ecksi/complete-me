@@ -1,8 +1,8 @@
 class Node {
   constructor(data = null) {
     this.data = data;
-    this.isWord = false;
-    this.child = {};
+    this.end = false;
+    this.children = {};
   }
 }
 
