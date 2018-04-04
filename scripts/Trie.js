@@ -17,6 +17,9 @@ class Trie {
     const letter = word[index];
 
     if (word.length === index) {
+      if (currentNode.end) {
+        this.count--;
+      }
       currentNode.end = true;
       return word;
     }
