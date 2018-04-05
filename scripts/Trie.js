@@ -31,10 +31,8 @@ class Trie {
   }
 
   suggest(prefix) {
-    const sanitizeWord = prefix.toLowerCase();
-    const prefixNode = findEndOfPrefix(sanitizeWord);
-
-    getSuggestionsFrom(prefixNode);
+    const suffixs = this.getSuggestionsFrom(this.findEndOfPrefix(prefix.toLowerCase()));
+    return suffixs.map(suffix => prefix + suffix);
   }
 
   findEndOfPrefix(prefix, currentNode = this.root, index = 0) {
@@ -60,11 +58,14 @@ class Trie {
 
     letters.forEach(letter => {
       const letterKey = currentNode.children[letter];
-
       word = word + letterKey.data;
+
       if (letterKey.end) {
-       return wordSuffixs.push(word); 
+      wordSuffixs.push(word);
+      if (!Object.keys(currentNode.children)) {
+        word = "";
       }
+    }
 
       if (currentNode.children[letterKey.data]) {
         currentNode = currentNode.children[letterKey.data];
