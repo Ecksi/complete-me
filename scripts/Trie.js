@@ -29,6 +29,50 @@ class Trie {
     }
     return this.splitWord(word, currentNode.children[letter], ++index);
   }
+
+  suggest(prefix) {
+    const sanitizeWord = prefix.toLowerCase();
+    const prefixNode = findEndOfPrefix(sanitizeWord);
+
+    getSuggestionsFrom(prefixNode);
+  }
+
+  findEndOfPrefix(prefix, currentNode = this.root, index = 0) {
+    const letter = prefix[index];
+
+    if (prefix.length === index) {
+      return currentNode;
+    }
+
+    if (!currentNode.children[letter]) {
+      return undefined;
+    }
+
+    return this.findEndOfPrefix(prefix, currentNode.children[letter], ++index)
+  }
+
+  getSuggestionsFrom(currentNode, word = "", wordSuffixs = []) {
+    const letters = Object.keys(currentNode.children);
+
+    if(!currentNode.data) {
+      return wordSuffixs;
+    }
+
+    letters.forEach(letter => {
+      const letterKey = currentNode.children[letter];
+
+      word = word + letterKey.data;
+      if (letterKey.end) {
+       return wordSuffixs.push(word); 
+      }
+
+      if (currentNode.children[letterKey.data]) {
+        currentNode = currentNode.children[letterKey.data];
+        return this.getSuggestionsFrom(currentNode, word, wordSuffixs)
+      }
+    })
+    return wordSuffixs;
+  }
 }
 
 module.exports = Trie;
