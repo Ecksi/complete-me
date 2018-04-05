@@ -76,7 +76,7 @@ class Trie {
   }
 
   populate(array) {
-    array.forEach(element => this.insert(element));
+    array.forEach(word => this.insert(word));
   }
 }
 
