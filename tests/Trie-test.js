@@ -1,6 +1,9 @@
 const { expect } = require('chai');
 const Node = require('../scripts/Node');
 const Trie = require('../scripts/Trie');
+const fs = require('fs');
+const text = "/usr/share/dict/words";
+const dictionary = fs.readFileSync(text).toString().trim().split('\n');
 
 describe('TRIE', () => {
   let trie;
@@ -58,6 +61,26 @@ describe('TRIE', () => {
       trie.insert('machop');
 
       expect(trie.count).to.eq(1);
+    })
+  })
+
+  describe('SUGGEST', () => {
+    it('should return undefined if the prefix doesn\'t exist', () => {
+      expect(trie.findEndOfPrefix('ditto')).to.eq(undefined);
+    })
+
+    it('should return current Node when the end of prefix is reached', () => {
+      trie.insert('charmander');
+      const prefix = trie.findEndOfPrefix('ch');
+
+      expect(prefix).to.eq(trie.root.children.c.children.h);
+    })
+
+    it('should find the end of a word', () => {
+      trie.insert('oddish');
+      const prefix = trie.findEndOfPrefix('odd');
+
+      expect(trie.getSuggestionsFrom(prefix)).to.deep.eq(['ish']);
     })
   })
 })
