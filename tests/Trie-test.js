@@ -99,4 +99,11 @@ describe('TRIE', () => {
       expect(trie.getSuggestionsFrom(prefix)).to.deep.eq(['ran', 'rano', 'queen']);
     })
   })
+
+  describe('POPULATE', () => {
+    it('should populate an array of words', () => {
+      trie.populate(dictionary);
+      expect(trie.count).to.eq(234371);
+    })
+  })
 })
