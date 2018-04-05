@@ -74,6 +74,10 @@ class Trie {
     })
     return wordSuffixs;
   }
+
+  populate(array) {
+    array.forEach(element => this.insert(element));
+  }
 }
 
 module.exports = Trie;
