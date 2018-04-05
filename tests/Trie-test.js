@@ -82,5 +82,21 @@ describe('TRIE', () => {
 
       expect(trie.getSuggestionsFrom(prefix)).to.deep.eq(['ish']);
     })
+
+    it('should concat the prefix to the suffix', () => {
+      trie.insert('jigglypuff');
+      const result = ['jigglypuff'];
+
+      expect(trie.suggest('jigg')).to.deep.eq(result);
+    })
+
+    it('should find the end of multiple words', () => {
+      trie.insert('nidoran');
+      trie.insert('nidorano');
+      trie.insert('nidoqueen');
+      const prefix = trie.findEndOfPrefix('nido');
+
+      expect(trie.getSuggestionsFrom(prefix)).to.deep.eq(['ran', 'rano', 'queen']);
+    })
   })
 })
