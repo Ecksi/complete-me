@@ -108,6 +108,38 @@ describe('TRIE', () => {
     });
   })
 
+  describe('SELECT', () => {
+    it('should be to increment weight count', () => {
+      trie.insert('dratini');
+      trie.insert('dragonair');
+      trie.insert('dragonite');
+      trie.insert('dram')
+
+      const initialWeight = trie.root.children.d.children.r.children.a.children.m.weight;
+
+      expect(initialWeight).to.eq(0);
+
+      trie.select('dram');
+
+      const modifiedWeight = trie.root.children.d.children.r.children.a.children.m.weight;
+
+      expect(modifiedWeight).to.eq(1);
+    });
+
+    it('should order suggestions by weight', () => {
+      trie.insert('excellent');
+      trie.insert('exeggutor');
+      trie.insert('exeggcute');
+
+      trie.select('excellent');
+      trie.select('excellent');
+
+      const result = ['excellent', 'exeggutor', 'exeggcute'];
+
+      expect(trie.suggest('ex')).to.deep.eq(result);
+    });
+  });
+
   describe('POPULATE', () => {
     it('should populate an array of words', () => {
       trie.populate(dictionary);

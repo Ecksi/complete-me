@@ -13,14 +13,18 @@ describe('Node', () => {
   });
 
   it('should have data default to null', () => {
-    expect(node.data).to.equal(null);
+    expect(node.data).to.eq(null);
   });
 
   it('should have end start out false by default', () => {
-    expect(node.end).to.equal(false);
+    expect(node.end).to.eq(false);
   });
 
   it('should have child start as an empty object by default', () => {
-    expect(node.children).to.deep.equal({});
+    expect(node.children).to.deep.eq({});
+  });
+
+  it('should start with a weight of 0', () => {
+    expect(node.weight).to.deep.eq(0);
   });
 })
