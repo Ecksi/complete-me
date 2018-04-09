@@ -97,19 +97,10 @@ class Trie {
     });
   }
 
-      if (letterKey.end) {
-      wordSuffixs.push(word);
-      if (!Object.keys(currentNode.children)) {
-        word = "";
-      }
-    }
+  select(word) {
+    const currentNode = this.findEndOfPrefix(word);
 
-      if (currentNode.children[letterKey.data]) {
-        currentNode = currentNode.children[letterKey.data];
-        return this.getSuggestionsFrom(currentNode, word, wordSuffixs)
-      }
-    })
-    return wordSuffixs;
+    currentNode.weight++;
   }
 
   populate(array) {
