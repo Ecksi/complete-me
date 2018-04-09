@@ -3,6 +3,7 @@ class Node {
     this.data = data;
     this.end = false;
     this.children = {};
+    this.weight = 0;
   }
 }
 
