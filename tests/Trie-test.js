@@ -127,14 +127,22 @@ describe('TRIE', () => {
     });
 
     it('should order suggestions by weight', () => {
-      trie.insert('excellent');
       trie.insert('exeggutor');
       trie.insert('exeggcute');
+      trie.insert('excellent');
+      trie.insert('expressionless');
+      trie.insert('existentialism');
 
       trie.select('excellent');
       trie.select('excellent');
+      trie.select('excellent');
 
-      const result = ['excellent', 'exeggutor', 'exeggcute'];
+      trie.select('exeggutor');
+      trie.select('exeggutor');
+
+      trie.select('expressionless');
+
+      const result = ['excellent', 'exeggutor', 'expressionless', 'exeggcute', 'existentialism'];
 
       expect(trie.suggest('ex')).to.deep.eq(result);
     });

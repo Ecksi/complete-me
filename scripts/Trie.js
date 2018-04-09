@@ -76,12 +76,12 @@ class Trie {
   }
 
   sortSuggestions() {
-    this.suggestions.forEach(suggestion => {
-      this.sortedSuggestions.push(suggestion.word);
-    })
-
     this.suggestions.sort((a, b) => {
       return b.weight - a.weight;
+    });
+
+    this.suggestions.forEach(suggestion => {
+      this.sortedSuggestions.push(suggestion.word);
     })
   }
 
