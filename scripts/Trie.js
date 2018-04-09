@@ -103,6 +103,16 @@ class Trie {
     currentNode.weight++;
   }
 
+  delete(word) {
+    const sanitizeWord = word.toLowerCase();
+    const currentNode = this.findEndOfPrefix(sanitizeWord);
+
+    if (currentNode.end) {
+      currentNode.end = false;
+      this.count--;
+    }
+  }
+
   populate(array) {
     array.forEach(element => this.insert(element));
   }
