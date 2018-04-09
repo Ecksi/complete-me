@@ -140,6 +140,36 @@ describe('TRIE', () => {
     });
   });
 
+  describe('DELETE', () => {
+    it('should be able to remove an word from the trie', () => {
+      trie.insert('sandshrew');
+      trie.insert('sandslash');
+
+      const result1 = ['sandshrew', 'sandslash'];
+      const result2 = ['sandslash'];
+
+      expect(trie.suggest('sand')).to.deep.eq(result1);
+
+      trie.delete('sandshrew');
+
+      expect(trie.suggest('sand')).to.deep.eq(result2)
+    });
+
+    it('should lower the count when a word is deleted', () => {
+      trie.insert('Eevee');
+      trie.insert('Vaporeon');
+      trie.insert('Jolteon');
+      trie.insert('Flareon');
+
+      expect(trie.count).to.eq(4);
+
+      trie.delete('Jolteon');
+      trie.delete('flareon');
+
+      expect(trie.count).to.eq(2);
+    });
+  });
+
   describe('POPULATE', () => {
     it('should populate an array of words', () => {
       trie.populate(dictionary);
