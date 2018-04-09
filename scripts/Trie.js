@@ -4,6 +4,8 @@ class Trie {
   constructor() {
     this.root = new Node('');
     this.count = 0;
+    this.suggestions = [];
+    this.sortedSuggestions = [];
   }
 
   insert(word) {
@@ -31,34 +33,69 @@ class Trie {
   }
 
   suggest(prefix) {
-    const suffixs = this.getSuggestionsFrom(this.findEndOfPrefix(prefix.toLowerCase()));
-    return suffixs.map(suffix => prefix + suffix);
+    this.resetSuggestions();
+    const sanitizePrefix = prefix.toLowerCase();
+    const currentNode = this.findEndOfPrefix(sanitizePrefix);
+    
+    if (!currentNode) { 
+      return null 
+    };
+
+    this.findWordSuggestions(currentNode, sanitizePrefix);
+    this.sortSuggestions();
+
+    return this.sortedSuggestions;
   }
 
-  findEndOfPrefix(prefix, currentNode = this.root, index = 0) {
-    const letter = prefix[index];
+  findEndOfPrefix(prefix) {
+    const prefixArray = Array.from(prefix);
+    let currentNode = this.root;
 
-    if (prefix.length === index) {
-      return currentNode;
+    while (prefixArray.length) {
+      let letter = prefixArray.shift();
+      let child = currentNode.children[letter];
+      if (!child) {
+        return undefined;
+      }
+      currentNode = child;
     }
 
-    if (!currentNode.children[letter]) {
-      return undefined;
-    }
-
-    return this.findEndOfPrefix(prefix, currentNode.children[letter], ++index)
+    return currentNode
   }
 
-  getSuggestionsFrom(currentNode, word = "", wordSuffixs = []) {
-    const letters = Object.keys(currentNode.children);
-
-    if(!currentNode.data) {
-      return wordSuffixs;
+  findWordSuggestions(startNode, prefix) {
+    if (startNode.end) {
+      this.formatSuggestion(startNode, prefix)
     }
 
-    letters.forEach(letter => {
-      const letterKey = currentNode.children[letter];
-      word = word + letterKey.data;
+    Object.keys(startNode.children).forEach(childLetter => {
+      const currentNode = startNode.children[childLetter];
+
+      return this.findWordSuggestions(currentNode, prefix + childLetter);
+    })
+  }
+
+  sortSuggestions() {
+    this.suggestions.forEach(suggestion => {
+      this.sortedSuggestions.push(suggestion.word);
+    })
+
+    this.suggestions.sort((a, b) => {
+      return b.weight - a.weight;
+    })
+  }
+
+  resetSuggestions() {
+    this.suggestions = [];
+    this.sortedSuggestions = [];
+  }
+
+  formatSuggestion(node, word) {
+    this.suggestions.push({
+      word: word,
+      weight: node.weight
+    });
+  }
 
       if (letterKey.end) {
       wordSuffixs.push(word);
